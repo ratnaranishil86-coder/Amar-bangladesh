@@ -2,11 +2,6 @@ name: Build & Publish Android APK
 
 on:
   push:
-    branches:
-      - main
-      - master
-    tags:
-      - "v*"
   workflow_dispatch:
 
 permissions:
@@ -27,16 +22,18 @@ jobs:
           distribution: temurin
           java-version: "21"
 
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Android SDK 36.1 & accept licenses
+        run: |
+          yes | sdkmanager --licenses > /dev/null 2>&1 || true
+          sdkmanager "platforms;android-36.1" "build-tools;36.0.0" || sdkmanager "platforms;android-36" "build-tools;36.0.0"
+
       - name: Set up Gradle 9.3.1
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: "9.3.1"
-
-      - name: Accept Android SDK licenses
-        run: |
-          if [ -x "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" ]; then
-            yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null 2>&1 || true
-          fi
 
       - name: Prepare signing keystore and environment defaults
         run: |
@@ -47,11 +44,11 @@ jobs:
             cp .env.example .env
           fi
 
-      - name: Run unit tests
-        run: gradle :app:testDebugUnitTest --no-daemon
-
       - name: Build signed debug APK
-        run: gradle :app:assembleDebug --no-daemon
+        run: gradle :app:assembleDebug --no-daemon -Dorg.gradle.jvmargs="-Xmx2560m -Dfile.encoding=UTF-8"
+
+      - name: Run unit tests
+        run: gradle :app:testDebugUnitTest --no-daemon -Dorg.gradle.jvmargs="-Xmx2560m -Dfile.encoding=UTF-8"
 
       - name: Package APK with clean filename
         run: |
@@ -66,7 +63,9 @@ jobs:
           retention-days: 30
 
       - name: Publish APK to GitHub Releases
-        if: github.event_name != 'pull_request'
+        id: gh_release
+        if: github.event_name != 'pull_request' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch')
+        continue-on-error: true
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || 'latest-apk' }}
@@ -80,3 +79,14 @@ jobs:
             Download `Amar-Bangladesh.apk` from **Assets** below and tap it on your Android device to install.
           files: |
             release-apk/Amar-Bangladesh.apk
+
+      - name: Write build summary
+        if: always()
+        run: |
+          echo "### Build Status" >> "$GITHUB_STEP_SUMMARY"
+          echo "- APK Artifact: **Amar-Bangladesh-APK** (available under Actions Artifacts)" >> "$GITHUB_STEP_SUMMARY"
+          if [ "${{ steps.gh_release.outcome }}" != "success" ]; then
+            echo "- GitHub Release step skipped/failed (check **Settings → Actions → General → Workflow permissions → Read and write permissions** to enable direct Releases download)." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "- GitHub Release: Published **Amar-Bangladesh.apk** to Releases." >> "$GITHUB_STEP_SUMMARY"
+          fi
