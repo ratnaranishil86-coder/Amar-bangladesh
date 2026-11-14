@@ -1,0 +1,82 @@
+name: Build & Publish Android APK
+
+on:
+  push:
+    branches:
+      - main
+      - master
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-apk:
+    name: Build Installable APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+
+      - name: Set up Gradle 9.3.1
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "9.3.1"
+
+      - name: Accept Android SDK licenses
+        run: |
+          if [ -x "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" ]; then
+            yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null 2>&1 || true
+          fi
+
+      - name: Prepare signing keystore and environment defaults
+        run: |
+          if [ ! -f debug.keystore ] && [ -f debug.keystore.base64 ]; then
+            base64 -d debug.keystore.base64 > debug.keystore
+          fi
+          if [ ! -f .env ] && [ -f .env.example ]; then
+            cp .env.example .env
+          fi
+
+      - name: Run unit tests
+        run: gradle :app:testDebugUnitTest --no-daemon
+
+      - name: Build signed debug APK
+        run: gradle :app:assembleDebug --no-daemon
+
+      - name: Package APK with clean filename
+        run: |
+          mkdir -p release-apk
+          cp app/build/outputs/apk/debug/app-debug.apk release-apk/Amar-Bangladesh.apk
+
+      - name: Upload APK build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Amar-Bangladesh-APK
+          path: release-apk/Amar-Bangladesh.apk
+          retention-days: 30
+
+      - name: Publish APK to GitHub Releases
+        if: github.event_name != 'pull_request'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || 'latest-apk' }}
+          name: ${{ startsWith(github.ref, 'refs/tags/') && format('আমার বাংলাদেশ {0}', github.ref_name) || 'আমার বাংলাদেশ (Latest APK)' }}
+          prerelease: ${{ !startsWith(github.ref, 'refs/tags/') }}
+          make_latest: ${{ startsWith(github.ref, 'refs/tags/') && 'true' || 'false' }}
+          body: |
+            ### আমার বাংলাদেশ — Discover Bangladesh (Android APK)
+
+            ফোনে সরাসরি ইনস্টল করতে নিচের **Assets** থেকে `Amar-Bangladesh.apk` ডাউনলোড করে ওপেন করুন।
+            Download `Amar-Bangladesh.apk` from **Assets** below and tap it on your Android device to install.
+          files: |
+            release-apk/Amar-Bangladesh.apk

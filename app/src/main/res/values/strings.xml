@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">আমার বাংলাদেশ</string>
+    <string name="app_tagline">Discover Bangladesh</string>
+    <string name="phase_badge">Phase 01 • Foundation</string>
+
+    <!-- Bottom Navigation -->
+    <string name="nav_home">হোম</string>
+    <string name="nav_home_en">Home</string>
+    <string name="nav_districts">জেলা</string>
+    <string name="nav_districts_en">Districts</string>
+    <string name="nav_explore">এক্সপ্লোর</string>
+    <string name="nav_explore_en">Explore</string>
+    <string name="nav_saved">সংরক্ষিত</string>
+    <string name="nav_saved_en">Saved</string>
+    <string name="nav_profile">প্রোফাইল</string>
+    <string name="nav_profile_en">Profile</string>
+
+    <!-- Home Screen -->
+    <string name="home_welcome_greeting">স্বাগতম বাংলাদেশে</string>
+    <string name="home_welcome_subtitle">বাংলার ইতিহাস, সংস্কৃতি, নদী ও প্রকৃতি ঘুরে দেখুন এক জায়গায়</string>
+    <string name="home_search_placeholder">বিভাগ, গন্তব্য বা খাবার খুঁজুন…</string>
+    <string name="home_search_clear">অনুসন্ধান মুছুন</string>
+    <string name="home_hero_badge">সবুজ শ্যামল বাংলা</string>
+    <string name="home_hero_title">আমার বাংলাদেশ</string>
+    <string name="home_hero_subtitle">Discover Bangladesh — ৮টি বিভাগ ও ৬৪ জেলার ঐতিহ্য, স্বাদ ও প্রাকৃতিক সৌন্দর্যের ডিজিটাল গাইড</string>
+    <string name="home_hero_cta">গন্তব্য দেখুন</string>
+    <string name="home_section_divisions">আটটি বিভাগ</string>
+    <string name="home_section_divisions_sub">Eight Divisions</string>
+    <string name="home_section_featured_district">নির্বাচিত জেলা</string>
+    <string name="home_section_featured_district_sub">Featured District</string>
+    <string name="home_section_popular_foods">জনপ্রিয় খাবার</string>
+    <string name="home_section_popular_foods_sub">Popular Foods</string>
+    <string name="home_section_destinations">দর্শনীয় স্থান</string>
+    <string name="home_section_destinations_sub">Tourist Destinations</string>
+    <string name="home_section_discover_more">আরও জানুন</string>
+    <string name="home_section_discover_more_sub">Discover More</string>
+    <string name="see_all">সব দেখুন</string>
+    <string name="placeholder_tag">নমুনা • Placeholder</string>
+    <string name="division_placeholder_note">জেলা তথ্য যুক্ত হবে (Phase 02)</string>
+    <string name="no_search_results_title">কোনো ফলাফল পাওয়া যায়নি</string>
+    <string name="no_search_results_desc">অন্য কোনো শব্দ দিয়ে বিভাগ বা নমুনা কার্ড খুঁজুন</string>
+
+    <!-- Districts Screen -->
+    <string name="districts_title">জেলা নির্দেশিকা</string>
+    <string name="districts_subtitle">District Directory • Phase 01</string>
+    <string name="districts_search_hint">বিভাগ বা নমুনা এন্ট্রি খুঁজুন…</string>
+    <string name="districts_all_divisions">সকল বিভাগ</string>
+    <string name="districts_phase_notice_title">প্রাথমিক জেলা কাঠামো</string>
+    <string name="districts_phase_notice_body">৮টি বিভাগের কাঠামো প্রস্তুত করা হয়েছে। কোনো কাল্পনিক বা যাচাইহীন তথ্য ছাড়াই Phase 02-তে ৬৪টি জেলার পূর্ণাঙ্গ তথ্য যুক্ত হবে।</string>
+
+    <!-- Explore Screen -->
+    <string name="explore_title">এক্সপ্লোর বাংলাদেশ</string>
+    <string name="explore_subtitle">Explore Culture, Nature &amp; Heritage</string>
+    <string name="explore_category_all">সব</string>
+    <string name="explore_category_nature">প্রকৃতি</string>
+    <string name="explore_category_food">খাবার</string>
+    <string name="explore_category_heritage">ঐতিহ্য</string>
+    <string name="explore_category_culture">সংস্কৃতি</string>
+
+    <!-- Saved Screen -->
+    <string name="saved_title">সংরক্ষিত তালিকা</string>
+    <string name="saved_subtitle">Saved Bookmarks • Local Room Storage</string>
+    <string name="saved_empty_title">এখনও কিছু সংরক্ষণ করা হয়নি</string>
+    <string name="saved_empty_body">হোম বা এক্সপ্লোর স্ক্রিন থেকে পছন্দের নমুনা কার্ডে বুকমার্ক আইকনে ট্যাপ করে এখানে সংরক্ষণ করুন।</string>
+    <string name="saved_empty_cta">হোমে ফিরে যান</string>
+    <string name="saved_remove">সংরক্ষণ সরান</string>
+    <string name="saved_add">সংরক্ষণ করুন</string>
+
+    <!-- Profile Screen -->
+    <string name="profile_title">প্রোফাইল ও সেটিংস</string>
+    <string name="profile_subtitle">App Identity &amp; Preferences</string>
+    <string name="profile_guest_name">ভ্রমণপিয়াসী অতিথি</string>
+    <string name="profile_guest_subtitle">Discover Bangladesh Explorer • Phase 01</string>
+    <string name="profile_theme_title">থিম পছন্দ</string>
+    <string name="profile_theme_system">সিস্টেম</string>
+    <string name="profile_theme_light">লাইট</string>
+    <string name="profile_theme_dark">ডার্ক</string>
+    <string name="profile_language_title">ভাষা প্রদর্শন</string>
+    <string name="profile_language_bn">বাংলা প্রাথমিক</string>
+    <string name="profile_language_bilingual">দ্বিভাষিক (বাংলা + EN)</string>
+    <string name="profile_arch_title">আর্কিটেকচার ও স্টোরেজ</string>
+    <string name="profile_arch_desc">Single Activity • Jetpack Compose • Material 3 • MVVM • Navigation Compose • Room-ready Local Repository</string>
+    <string name="profile_saved_count_label">সংরক্ষিত আইটেম</string>
+    <string name="profile_divisions_count_label">বিভাগ কাঠামো</string>
+</resources>
